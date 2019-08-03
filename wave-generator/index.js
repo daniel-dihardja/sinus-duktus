@@ -20,6 +20,7 @@ const initCanvas = () => {
   c.width = WIDTH;
   c.height = HEIGHT;
   ctx.translate(0, HEIGHT / 2);
+  ctx.fillStyle = "red";
 };
 
 const initArturio = () => {
@@ -62,14 +63,14 @@ const fsin = (t, d, m) => Math.sin(t / d) * m;
 
 const render = () => {
   ctx.clearRect(0, - HEIGHT / 2, WIDTH, HEIGHT);
-  ctx.fillStyle = "red";
-  o += 0.2;
+
+  o += 0.1;
   let t = 0;
+  let y = 0;
 
   while(t < WIDTH ) {
-    const x = t;
-    const y = fsin(t+o, d1, m1) * fsin(t+o, d2, m2);
-    ctx.fillRect(x, y,2,2);
+    y = fsin(t+o, d1, m1) * fsin(t+o, d2, m2);
+    ctx.fillRect(t, y,2,2);
     t ++;
   }
   window.requestAnimationFrame(render);
