@@ -10,11 +10,15 @@ const ctx = c.getContext('2d');
 
 // control params
 
-let o = 0;
+
 let d1 = 10;
 let m1 = 100;
 let d2 = 100;
 let m2 = 1.2;
+
+let o = 0;
+let t = 0;
+let y = 0;
 
 const initCanvas = () => {
   c.width = WIDTH;
@@ -30,8 +34,8 @@ const initArturio = () => {
         i.onmidimessage = (msg) => {
           let data = [...msg.data];
           data[2] = data[2] / 127;
+          if(data[2] <= 0) data[2] = 0.001;
           updateParams(data);
-          console.log(data);
         }
       }
     }, err => console.log(err));
@@ -50,7 +54,7 @@ const updateParams = (data) => {
       break;
 
     case 64:
-      d2 = data[2] * 10;
+      d2 = data[2] * 200;
       break;
 
     case 76:
@@ -64,18 +68,26 @@ const fsin = (t, d, m) => Math.sin(t / d) * m;
 const render = () => {
   ctx.clearRect(0, - HEIGHT / 2, WIDTH, HEIGHT);
 
-  o += 0.1;
-  let t = 0;
-  let y = 0;
+  t += 0.1;
+  o = 0;
+  y = 0;
 
-  while(t < WIDTH ) {
-    y = fsin(t+o, d1, m1) * fsin(t+o, d2, m2);
-    ctx.fillRect(t, y,2,2);
-    t ++;
+  /*
+  const _x = o;
+  const _y = fsin(o, d1, m1) * fsin(o, d2, m2);
+  */
+
+  while(o < WIDTH ) {
+    y = fsin(t + o, d1, m1) * fsin(t + o, d2, m2);
+    ctx.fillRect(o, y,2,2);
+    o ++;
   }
   window.requestAnimationFrame(render);
 };
 
+/**
+ * entry point
+ */
 const init = () => {
   console.log('- sinus duktus -');
   initCanvas();
