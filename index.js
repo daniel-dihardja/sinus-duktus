@@ -10,7 +10,6 @@ const ctx = c.getContext('2d');
 
 // control params
 
-
 let d1 = 10;
 let m1 = 100;
 let d2 = 100;
@@ -46,7 +45,7 @@ const updateParams = (data) => {
 
   switch (data[1]) {
     case 3:
-      d1 = data[2] * 30;
+      d1 = data[2] * 10;
       break;
 
     case 65:
@@ -73,13 +72,13 @@ const render = () => {
   y = 0;
 
   /*
-  const _x = o;
-  const _y = fsin(o, d1, m1) * fsin(o, d2, m2);
+  const _x = t;
+  const _y = fsin(t, d1, m1) * fsin(t, d2, m2);
   */
 
   while(o < WIDTH ) {
     y = fsin(t + o, d1, m1) * fsin(t + o, d2, m2);
-    ctx.fillRect(o, y,2,2);
+    ctx.fillRect(o, y, 2, 2);
     o ++;
   }
   window.requestAnimationFrame(render);
